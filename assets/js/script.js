@@ -1,4 +1,4 @@
-// Stop at 4.1.8 right after the video
+// Stop at 4.2.4 right at Add task type dropdown
 
 var buttonE1 = document.querySelector("#save-task");
 // console.log(buttonE1);
