@@ -1,8 +1,10 @@
 // Stop at 4.2.8 right at Reset the form
 var taskIdCounter = 0;
-
+// order of variables matter because JS reads from top to bottom
 var formE1 = document.querySelector("#task-form");
 var tasksToDoE1 = document.querySelector("#tasks-to-do");
+var tasksInProgressE1 = document.querySelector("#tasks-in-progress");
+var tasksCompletedE1 = document.querySelector("#tasks-completed");
 var pageContentE1 = document.querySelector("#page-content");
 
 var taskFormHandler = function(event) {
@@ -144,6 +146,27 @@ var taskButtonHandler = function(event) {
     }
 };
 
+var taskStatusChangeHandler = function(event) {
+   // get the task item's id
+   var taskId = event.target.getAttribute("data-task-id");
+
+// find the parent task item element based on the id
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+
+   // get the currently selected option's value and convert to lowercase
+    var statusValue = event.target.value.toLowerCase();
+    
+    if (statusValue === "to do") {
+        tasksToDoE1.appendChild(taskSelected);
+    } 
+    else if (statusValue === "in progress") {
+        tasksInProgressE1.appendChild(taskSelected);
+    } // getting an error message "Uncaught TypeError: Cannot read property 'appendChild' of null at HTMLELEMENT.taskStatusChangeHandler"
+    else if (statusValue === "completed") {
+        tasksCompletedE1.appendChild(taskSelected);
+    }
+};
+
 var editTask = function(taskId) {
     
     // get task list item element
@@ -168,6 +191,7 @@ var deleteTask = function(taskId) {
 
 pageContentE1.addEventListener("click", taskButtonHandler);
 formE1.addEventListener("submit", taskFormHandler);
+pageContentE1.addEventListener("change", taskStatusChangeHandler);
 
 //  {
 //     // 1. Created a new HTML element specified by tagname 
